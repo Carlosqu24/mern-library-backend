@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let URI = process.env.MONGODB_URI || 'mongodb://localhost/library-app'
+let URI = process.env.MONGODB_URL || 'mongodb://localhost/library-app'
 
 mongoose.connect(URI, {
   

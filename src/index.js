@@ -1,10 +1,11 @@
 const express = require('express');
-
 const cors = require('cors');
 
+const { createRoles } = require("./libs/initialSetup");
 
 // INITIALIZATIONS
 const app = express();
+createRoles();
 require('./database');
 require('dotenv').config();
 
@@ -20,6 +21,7 @@ app.use(cors());
 
 // ROUTES
 app.use('/api/books', require('./routes/books.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 
 
 app.listen(app.get('port'), () => {
