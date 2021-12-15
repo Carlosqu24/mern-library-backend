@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan')
 
 const { createRoles } = require("./libs/initialSetup");
 
@@ -17,6 +18,7 @@ app.set('port', process.env.PORT || 9000);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 
 // ROUTES
