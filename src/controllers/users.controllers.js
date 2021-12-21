@@ -12,11 +12,25 @@ usersControllers.getUsers = async (req, res) => {
 };
 
 usersControllers.createUser = async (req, res) => {
-      // const { username, email, password, roles } = req.body;
+      const { username, email, password, roles } = req.body;
 
-      // const user = new User({ username, email, password, roles })
+      const newUser = new User({
+            username, 
+            email,
+            password: await User.encryptPassword(password)
+      });
 
-      res.json("creating user")
+      if (roles) {
+            const foundRoles = await Role.find({ name: { $in: roles } });
+            newUser.roles = foundRoles.map(role => role._id)
+      } else {    
+            const role = await Role.findOne({ name: "user" });
+            newUser.roles = [role._id]
+      }
+
+      const savedUser = await newUser.save();
+
+      res.json(savedUser)
 };
 
 
